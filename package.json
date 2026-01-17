@@ -10,6 +10,10 @@
   },
   "dependencies": {
     "astro": "^5.16.6",
-    "bootstrap": "^5.3.8"
+    "bootstrap": "^5.3.8",
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9"
   }
 }

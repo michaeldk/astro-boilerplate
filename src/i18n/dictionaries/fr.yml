@@ -1,0 +1,17 @@
+languageLabel:
+  nl: "Néerlandais"
+  fr: "Français"
+  de: "Allemand"
+  en: "Anglais"
+
+federalHeader: "Informations et services officiels :"
+skipToContent: "Passer directement au contenu"
+backToTop: "vers le haut"
+
+cookieBanner:
+  intro: "Nous utilisons des cookies pour rendre ce site plus convivial."
+  moreInfo: "En savoir plus"
+  accept: "Continuer"
+
+siteTitle: "Site Title FR"
+
