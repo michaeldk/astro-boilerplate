@@ -1,0 +1,24 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { LOCALES, type Locale } from '../../i18n/config';
+
+export async function getStaticPaths() {
+  return LOCALES.map((locale) => ({ params: { locale } }));
+}
+
+type Props = { locale: Locale };
+const { locale } = Astro.params as unknown as Props;
+
+const entries = await getCollection('pages', ({ data }) => data.locale === locale && data.translationKey === 'home');
+const entry = entries[0];
+const renderResult = entry ? await entry.render() : null;
+const Content = renderResult?.Content;
+---
+
+<Layout>
+  <main style="max-width: 70ch; margin: 3rem auto; padding: 0 1rem;">
+    {Content ? <Content /> : <p>Missing content entry for {locale} / home.</p>}
+  </main>
+</Layout>
+

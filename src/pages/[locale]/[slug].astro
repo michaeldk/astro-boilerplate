@@ -1,0 +1,44 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { LOCALES, type Locale } from '../../i18n/config';
+import { ROUTES, type TranslationKey } from '../../i18n/routes';
+
+export async function getStaticPaths() {
+  const paths: Array<{
+    params: { locale: string; slug: string };
+    props: { locale: Locale; translationKey: TranslationKey };
+  }> = [];
+
+  for (const locale of LOCALES) {
+    for (const translationKey of Object.keys(ROUTES) as TranslationKey[]) {
+      if (translationKey === 'home') continue;
+      const slug = ROUTES[translationKey]?.[locale];
+      if (!slug) continue;
+      paths.push({
+        params: { locale, slug },
+        props: { locale, translationKey },
+      });
+    }
+  }
+
+  return paths;
+}
+
+const { locale, translationKey } = Astro.props as { locale: Locale; translationKey: TranslationKey };
+
+const entries = await getCollection(
+  'pages',
+  ({ data }) => data.locale === locale && data.translationKey === translationKey,
+);
+const entry = entries[0];
+const renderResult = entry ? await entry.render() : null;
+const Content = renderResult?.Content;
+---
+
+<Layout>
+  <main style="max-width: 70ch; margin: 3rem auto; padding: 0 1rem;">
+    {Content ? <Content /> : <p>Missing content entry for {locale} / {translationKey}.</p>}
+  </main>
+</Layout>
+
