@@ -13,5 +13,10 @@ cookieBanner:
   moreInfo: "Meer info"
   accept: "Doorgaan"
 
+footerLinks:
+  accessibilityStatement: "Toegankelijkheidsverklaring"
+  reuse: "Voorwaarden voor hergebruik"
+  cookies: "Cookiebeleid"
+
 siteTitle: "Site Title NL"
 

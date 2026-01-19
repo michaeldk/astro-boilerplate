@@ -13,5 +13,10 @@ cookieBanner:
   moreInfo: "Mehr erfahren"
   accept: "Weiter"
 
+footerLinks:
+  accessibilityStatement: "Erklärung zur Barrierefreiheit"
+  reuse: "Bedingungen für die Wiederverwendung"
+  cookies: "Cookie-Richtlinie"
+
 siteTitle: "Site Title DE"
 

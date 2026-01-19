@@ -13,5 +13,10 @@ cookieBanner:
   moreInfo: "Find out more"
   accept: "Continue"
 
+footerLinks:
+  accessibilityStatement: "Accessibility statement"
+  reuse: "Conditions for reuse"
+  cookies: "Cookie Policy"
+
 siteTitle: "Site Title EN"
 
