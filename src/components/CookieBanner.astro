@@ -1,0 +1,65 @@
+---
+import type { Locale } from '../i18n/config';
+import { t } from '../i18n/ui';
+
+type Props = {
+  cookiesHref: string;
+};
+
+const { locale } = Astro.locals as { locale: Locale };
+const { cookiesHref } = Astro.props;
+---
+
+<div id="cookieBanner" class="cookie-banner" style="display:none;">
+  <div class="container-lg">
+    <div class="cookie-banner__inner">
+      <p class="cookie-banner__intro">{t(locale, 'cookieBanner.intro')}</p>
+      <div class="cookie-banner__actions">
+        <a class="cookie-banner__more" href={cookiesHref}>{t(locale, 'cookieBanner.moreInfo')}</a>
+        <button id="agreement" class="cookie-banner__accept" type="button">
+          {t(locale, 'cookieBanner.accept')}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .cookie-banner {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #111;
+    color: #fff;
+    padding: 1rem 0;
+  }
+  .cookie-banner__inner {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .cookie-banner__intro {
+    margin: 0;
+    opacity: 0.95;
+  }
+  .cookie-banner__actions {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+  }
+  .cookie-banner__more,
+  .cookie-banner__accept {
+    color: #fff;
+  }
+  .cookie-banner__accept {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    padding: 0.4rem 0.75rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+  }
+</style>
+

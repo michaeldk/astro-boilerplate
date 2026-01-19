@@ -1,0 +1,57 @@
+---
+import type { Locale } from '../i18n/config';
+import { routeFor } from '../i18n/routes';
+
+type Props = {
+  menuCurrent?: string;
+};
+
+const { locale } = Astro.locals as { locale: Locale };
+const { menuCurrent } = Astro.props;
+
+const footerLinks = [
+  { id: 'accessibility', translationKey: 'accessibilityStatement', label: 'Accessibility statement' },
+  { id: 'reuse', translationKey: 'reuse', label: 'Conditions for reuse' },
+  { id: 'cookies', translationKey: 'cookies', label: 'Cookie Policy' },
+] as const;
+---
+
+<footer id="footer" class="footer">
+  <div class="container-lg">
+    <ul class="footer-links">
+      {footerLinks.map((item) => (
+        <li>
+          <a
+            href={routeFor(locale, item.translationKey)}
+            class:list={['footer-link', { active: menuCurrent && item.id === menuCurrent }]}
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    margin-top: 2rem;
+    padding: 1rem 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+  }
+  .footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .footer-link {
+    color: inherit;
+  }
+  .footer-link.active {
+    font-weight: 700;
+  }
+</style>
+

@@ -1,0 +1,31 @@
+---
+import type { Locale } from '../i18n/config';
+import { t } from '../i18n/ui';
+
+type Props = {
+  targetId?: string;
+};
+
+const { locale } = Astro.locals as { locale: Locale };
+const { targetId = 'wrapper' } = Astro.props;
+---
+
+<button id="back2top" data-target={targetId} class="back2top" type="button">
+  <span>{t(locale, 'backToTop')}</span>
+</button>
+
+<style>
+  .back2top {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    background: #fff;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+</style>
+
