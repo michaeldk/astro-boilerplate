@@ -16,7 +16,12 @@ const renderResult = entry ? await entry.render() : null;
 const Content = renderResult?.Content;
 ---
 
-<Layout>
+<Layout
+  title={entry?.data.title}
+  description={entry?.data.description}
+  menuCurrent={entry?.data.menuCurrent}
+  pageType={entry?.data.layout ?? 'home'}
+>
   <main style="max-width: 70ch; margin: 3rem auto; padding: 0 1rem;">
     {Content ? <Content /> : <p>Missing content entry for {locale} / home.</p>}
   </main>

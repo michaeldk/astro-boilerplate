@@ -1,21 +1,97 @@
+---
+import type { Locale } from '../i18n/config';
+import { t } from '../i18n/ui';
+import { routeFor } from '../i18n/routes';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import CookieBanner from '../components/CookieBanner.astro';
+import BackToTop from '../components/BackToTop.astro';
+
+type Props = {
+  title?: string;
+  description?: string;
+  menuCurrent?: string;
+  pageType?: string;
+  bodyClasses?: string;
+};
+
+const {
+  title,
+  description,
+  menuCurrent,
+  pageType = 'basic',
+  bodyClasses = '',
+} = Astro.props;
+
+const { locale } = Astro.locals as { locale: Locale };
+
+const siteTitle = t(locale, 'siteTitle');
+const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle;
+const cookiesHref = routeFor(locale, 'cookies');
+---
+
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <meta name="description" content={description ?? ''} />
+    <title>{fullTitle}</title>
+
+    <!-- TODO: migrate favicons/manifest from Twig project -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+
+  <body class={`${pageType}-page ${bodyClasses}`.trim()}>
+    <CookieBanner cookiesHref={cookiesHref} />
+    <a id="skipToMainContent" class="skip-link" href="#content">
+      {t(locale, 'skipToContent')}
+    </a>
+
+    <div id="wrapper">
+      <SiteHeader />
+
+      <main id="content">
+        <div class="container-lg">
+          <slot />
+        </div>
+      </main>
+
+      <SiteFooter menuCurrent={menuCurrent} />
+    </div>
+
+    <BackToTop targetId="wrapper" />
+  </body>
 </html>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .container-lg {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem;
+  }
+
+  .skip-link {
+    position: absolute;
+    left: -999px;
+    top: 0.5rem;
+    z-index: 1000;
+    background: #111;
+    color: #fff;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.25rem;
+    text-decoration: none;
+  }
+
+  .skip-link:focus {
+    left: 0.5rem;
+  }
 </style>
