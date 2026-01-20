@@ -16,7 +16,7 @@ const pages = defineCollection({
     title: z.string().optional(),
     description: z.string().optional(),
 
-    layout: z.enum(['home', 'basic']).default('basic'),
+    pageType: z.enum(['home', 'basic']).default('basic'),
 
     menuCurrent: z.string().optional(),
   }),
