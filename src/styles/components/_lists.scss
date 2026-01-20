@@ -1,0 +1,7 @@
+ul, ol {
+  &:not([class^='nav']):not([class^='list-']):not(.dropdown-menu):not(.breadcrumb) {
+    li + li {
+      margin-top: .5em;
+    }
+  }
+}

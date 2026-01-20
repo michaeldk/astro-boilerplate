@@ -1,0 +1,19 @@
+//em converter
+@function em($pixels, $context: $browser-context) {
+  @return calc(#{$pixels} / #{$context} * 1em);
+}
+
+//rem converter
+@function rem($pixels) {
+  @return calc(#{$pixels} / #{$browser-context} * 1rem);
+}
+
+// Check if a map contains a key
+@function map-has-keys($map, $keys...) {
+  @each $key in $keys {
+    @if not map-has-key($map, $key) {
+      @return false;
+    }
+  }
+  @return true;
+}

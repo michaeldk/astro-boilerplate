@@ -1,0 +1,11 @@
+/*
+* https://getbootstrap.com/docs/5.2/utilities/api/#modify-utilities
+*/
+$utilities: map-merge($utilities,
+  (
+    "viewport-height": map-merge(
+        map-get($utilities, "viewport-height"),
+        ( responsive: true ),
+    )
+  )
+);
