@@ -6,6 +6,7 @@ import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import CookieBanner from '../components/CookieBanner.astro';
 import BackToTop from '../components/BackToTop.astro';
+import Base from './Base.astro';
 
 type Props = {
   title?: string;
@@ -28,46 +29,33 @@ const { locale } = Astro.locals as { locale: Locale };
 const siteTitle = t(locale, 'siteTitle');
 const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle;
 const cookiesHref = routeFor(locale, 'cookies');
+const bodyClass = `${pageType}-page ${bodyClasses}`.trim();
 ---
 
-<!doctype html>
-<html lang={locale}>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+<Base lang={locale} title={fullTitle} description={description} bodyClass={bodyClass}>
+  <CookieBanner cookiesHref={cookiesHref} />
+  <a id="skipToMainContent" class="skip-link" href="#content">
+    {t(locale, 'skipToContent')}
+  </a>
 
-    <meta name="description" content={description ?? ''} />
-    <title>{fullTitle}</title>
+  <div id="wrapper">
+    <SiteHeader />
 
-    <!-- TODO: migrate favicons/manifest from Twig project -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  </head>
+    <main id="content">
+      <div class="container-lg">
+        <slot />
+      </div>
+    </main>
 
-  <body class={`${pageType}-page ${bodyClasses}`.trim()}>
-    <CookieBanner cookiesHref={cookiesHref} />
-    <a id="skipToMainContent" class="skip-link" href="#content">
-      {t(locale, 'skipToContent')}
-    </a>
+    <SiteFooter menuCurrent={menuCurrent} />
+  </div>
 
-    <div id="wrapper">
-      <SiteHeader />
-
-      <main id="content">
-        <div class="container-lg">
-          <slot />
-        </div>
-      </main>
-
-      <SiteFooter menuCurrent={menuCurrent} />
-    </div>
-
-    <BackToTop targetId="wrapper" />
-  </body>
-</html>
+  <BackToTop targetId="wrapper" />
+</Base>
 
 <style>
-  html,
-  body {
+  :global(html),
+  :global(body) {
     margin: 0;
     width: 100%;
     height: 100%;
@@ -95,3 +83,4 @@ const cookiesHref = routeFor(locale, 'cookies');
     left: 0.5rem;
   }
 </style>
+

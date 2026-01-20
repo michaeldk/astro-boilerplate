@@ -1,0 +1,33 @@
+---
+import '../styles/styles.scss';
+
+type Props = {
+  lang: string;
+  title: string;
+  description?: string;
+  bodyClass?: string;
+};
+
+const { lang, title, description, bodyClass = '' } = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <meta name="description" content={description ?? ''} />
+    <title>{title}</title>
+
+    <!-- TODO: migrate favicons/manifest from Twig project -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <slot name="head" />
+  </head>
+
+  <body class={bodyClass}>
+    <slot />
+  </body>
+</html>
+

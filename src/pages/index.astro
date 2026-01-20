@@ -1,5 +1,5 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Page from '../layouts/Page.astro';
 import { LOCALES } from '../i18n/config';
 import { t } from '../i18n/ui';
 // Make a normal array copy so Astro/TS always sees array methods like `.map`,
@@ -7,9 +7,9 @@ import { t } from '../i18n/ui';
 const locales = [...LOCALES];
 ---
 
-<Layout title="Choose a language">
-	<main style="max-width: 70ch; margin: 3rem auto; padding: 0 1rem;">
-		<h1>Choose a language</h1>
+<Page title="Choose a language">
+	<section aria-labelledby="language-chooser-title">
+		<h1 id="language-chooser-title">Choose a language</h1>
 		<ul>
 			{locales.map((locale) => (
 				<li>
@@ -17,5 +17,5 @@ const locales = [...LOCALES];
 				</li>
 			))}
 		</ul>
-	</main>
-</Layout>
+	</section>
+</Page>
