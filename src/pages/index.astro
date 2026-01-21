@@ -1,21 +1,42 @@
 ---
-import Page from '../layouts/Page.astro';
+import type { Locale } from '../i18n/config';
+import Base from '../layouts/Base.astro';
 import { LOCALES } from '../i18n/config';
 import { t } from '../i18n/ui';
 // Make a normal array copy so Astro/TS always sees array methods like `.map`,
 // while keeping each element strongly typed as `Locale`.
 const locales = [...LOCALES];
+
+const { locale } = Astro.locals as { locale: Locale };
+const siteTitle = t(locale, 'siteTitle');
+const fullTitle = `Choose a language | ${siteTitle}`;
 ---
 
-<Page title="Choose a language">
-	<section aria-labelledby="language-chooser-title">
-		<h1 id="language-chooser-title">Choose a language</h1>
-		<ul>
-			{locales.map((locale) => (
-				<li>
-					<a href={locale}>{t(locale, `languageLabel.${locale}`)}</a>
-				</li>
-			))}
-		</ul>
-	</section>
-</Page>
+<Base lang={locale} title={fullTitle} bodyClass="language-select-page">
+	<main class="language-select-main">
+		<section class="language-select-container" aria-labelledby="language-chooser-title">
+			<h1 id="language-chooser-title">Choose a language</h1>
+			<ul>
+				{locales.map((locale) => (
+					<li>
+						<a href={locale}>{t(locale, `languageLabel.${locale}`)}</a>
+					</li>
+				))}
+			</ul>
+		</section>
+	</main>
+</Base>
+
+<style>
+	.language-select-main {
+		min-height: 100vh;
+		display: grid;
+		place-items: center;
+		padding: 2rem 1rem;
+	}
+
+	.language-select-container {
+		width: 100%;
+		max-width: 70ch;
+	}
+</style>
