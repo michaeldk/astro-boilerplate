@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Page from '../../layouts/Page.astro';
+import HomePage from '../../layouts/HomePage.astro';
 import { LOCALES, type Locale } from '../../i18n/config';
 
 export async function getStaticPaths() {
@@ -14,14 +15,26 @@ const entries = await getCollection('pages', ({ data }) => data.locale === local
 const entry = entries[0];
 const renderResult = entry ? await entry.render() : null;
 const Content = renderResult?.Content;
+
+const pageType = entry?.data.pageType ?? 'home';
 ---
 
-<Page
-  title={entry?.data.title}
-  description={entry?.data.description}
-  menuCurrent={entry?.data.menuCurrent}
-  pageType={entry?.data.pageType ?? 'home'}
->
-  {Content ? <Content /> : <p>Missing content entry for {locale} / home.</p>}
-</Page>
+{pageType === 'home' ? (
+  <HomePage
+    title={entry?.data.title}
+    description={entry?.data.description}
+    menuCurrent={entry?.data.menuCurrent}
+  >
+    {Content ? <Content /> : <p>Missing content entry for {locale} / home.</p>}
+  </HomePage>
+) : (
+  <Page
+    title={entry?.data.title}
+    description={entry?.data.description}
+    menuCurrent={entry?.data.menuCurrent}
+    pageType={pageType}
+  >
+    {Content ? <Content /> : <p>Missing content entry for {locale} / home.</p>}
+  </Page>
+)}
 

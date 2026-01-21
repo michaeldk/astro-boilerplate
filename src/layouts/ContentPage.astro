@@ -1,0 +1,70 @@
+---
+import Page from './Page.astro';
+
+type Props = {
+  title?: string;
+  description?: string;
+  menuCurrent?: string;
+  pageType?: string;
+  bodyClasses?: string;
+};
+
+const { title, description, menuCurrent, pageType = 'basic', bodyClasses = '' } = Astro.props;
+
+const hasHeader = Astro.slots.has('header');
+const hasSidebar = Astro.slots.has('sidebar');
+---
+
+<Page
+  title={title}
+  description={description}
+  menuCurrent={menuCurrent}
+  pageType={pageType}
+  bodyClasses={bodyClasses}
+>
+  {hasHeader && <div class="content-page-header"><slot name="header" /></div>}
+
+  <div class={`content-page-body ${hasSidebar ? 'has-sidebar' : ''}`.trim()}>
+    <div class="content-page-main">
+      <slot />
+    </div>
+
+    {hasSidebar && (
+      <aside class="content-page-sidebar">
+        <slot name="sidebar" />
+      </aside>
+    )}
+  </div>
+</Page>
+
+<style>
+  .content-page-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .content-page-body {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .content-page-body.has-sidebar {
+    grid-template-columns: minmax(0, 1fr) 320px;
+    align-items: start;
+  }
+
+  .content-page-sidebar {
+    position: sticky;
+    top: 1rem;
+  }
+
+  @media (max-width: 900px) {
+    .content-page-body.has-sidebar {
+      grid-template-columns: 1fr;
+    }
+
+    .content-page-sidebar {
+      position: static;
+    }
+  }
+</style>
+

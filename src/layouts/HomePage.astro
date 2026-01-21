@@ -1,0 +1,32 @@
+---
+import Page from './Page.astro';
+
+type Props = {
+  title?: string;
+  description?: string;
+  menuCurrent?: string;
+  bodyClasses?: string;
+};
+
+const { title, description, menuCurrent, bodyClasses = '' } = Astro.props;
+---
+
+<Page
+  title={title}
+  description={description}
+  menuCurrent={menuCurrent}
+  pageType="home"
+  bodyClasses={bodyClasses}
+>
+  <div class="home-page">
+    <slot />
+  </div>
+</Page>
+
+<style>
+  .home-page {
+    display: grid;
+    gap: 2rem;
+  }
+</style>
+
